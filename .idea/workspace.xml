@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af5dd568-e94a-4933-ad5a-8024c50d6771" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/sinktest/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/ProcessFunctionTest.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/SideOutputTest.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/WindowTest.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/flinksql/TableTest.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/com/uncle/wc/WordCount.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/wc/WordCount.scala" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +66,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.KafkaSink">
+  <component name="RunManager" selected="Application.ProcessFunctionTest">
     <configuration name="KafkaSink" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.uncle.sinktest.KafkaSink" />
       <module name="Flink" />
@@ -77,8 +80,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SourceTest" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.uncle.apitest.SourceTest" />
+    <configuration name="ProcessFunctionTest" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.uncle.apitest.ProcessFunctionTest" />
       <module name="Flink" />
       <extension name="coverage">
         <pattern>
@@ -90,12 +93,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StreamWordCount" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.uncle.wc.StreamWordCount" />
+    <configuration name="SideOutputTest" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.uncle.apitest.SideOutputTest" />
       <module name="Flink" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.uncle.wc.*" />
+          <option name="PATTERN" value="com.uncle.apitest.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -116,12 +119,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WordCount" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.uncle.wc.WordCount" />
+    <configuration name="WindowTest" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.uncle.apitest.WindowTest" />
       <module name="Flink" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.uncle.wc.*" />
+          <option name="PATTERN" value="com.uncle.apitest.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -131,11 +134,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ProcessFunctionTest" />
+        <item itemvalue="Application.SideOutputTest" />
+        <item itemvalue="Application.WindowTest" />
         <item itemvalue="Application.KafkaSink" />
         <item itemvalue="Application.TransformTest" />
-        <item itemvalue="Application.SourceTest" />
-        <item itemvalue="Application.StreamWordCount" />
-        <item itemvalue="Application.WordCount" />
       </list>
     </recent_temporary>
   </component>
