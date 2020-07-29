@@ -3,6 +3,7 @@
 该Porject用于测试和展示Flink各项功能
 
 ### 目录
-
+* WordCount入门
+    * [批处理+流处理](./src/main/scala/com/uncle/wc)
 * Sink功能实现
     * [KafkaSink](./src/main/scala/com/uncle/sinktest)
