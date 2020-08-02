@@ -9,6 +9,7 @@ object WordCount {
     //创建一个执行环境
     val env = ExecutionEnvironment.getExecutionEnvironment
 
+
     // 从文件中读取
     val inputPath = "/Users/uncleyao/Workplace/Flink/src/main/resources/hello.txt"
     val inputDataSet = env.readTextFile(inputPath)

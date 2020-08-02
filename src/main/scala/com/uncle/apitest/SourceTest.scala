@@ -8,14 +8,16 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011
 import sun.java2d.pipe.SpanShapeRenderer.Simple
 
 
-// 传感器读书样例类，有Id，时间，和温度
+/** 传感器读书样例类，有Id，时间，和温度 */
 case class SensorReading( id: String, timestamp: Long, temperature: Double )
 
 object SourceTest {
   def main(args: Array[String]): Unit = {
+    // 其实底层的环境应该是createLocalEnvironment【本地执行环境】或者createRemoteEnvironment【集群执行环境，需要JobManager的IP和port】
+    // 但最常用还是用get
     val env = StreamExecutionEnvironment.getExecutionEnvironment
 
-    // 1，从自定义的集合中读取数据
+    // 1，从自定义的集合中读取数据【有界】
     val stream1 = env.fromCollection( List(
       SensorReading("sensor_1", 1547718199, 35.80018327300259),
       SensorReading("sensor_6", 1547718201, 15.402984393403084),
@@ -23,16 +25,17 @@ object SourceTest {
       SensorReading("sensor_10", 1547718205, 38.101067604893444)
     ))
 
-    // 2, 从文件或者socket
+    // 2, 从文件或者socket【有界】
     val stream2 = env.readTextFile("/Users/uncleyao/Workplace/Flink/src/main/resources/hello.txt")
 
-    // 3. 从Kafka读数据
+    /** 3. 从Kafka读数据【无界】 */
     val properties = new Properties()
     properties.setProperty("bootstrap.servers", "localhost:9092")
     properties.setProperty("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     properties.setProperty("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     properties.setProperty("acks", "1")
 
+    /** addSource里是一个Function，Kafka传入topic，deserialize，和property */
     val stream3 = env.addSource( new FlinkKafkaConsumer011[String]("sensor-topic", new SimpleStringSchema(), properties))
 
     /**

@@ -13,8 +13,6 @@ object KafkaSink {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     env.setParallelism(1)
 
-    // val inputStream  = env.readTextFile("/Users/uncleyao/Workplace/Flink/src/main/resources/sensor.txt")
-
     val properties = new Properties()
     properties.setProperty("bootstrap.servers", "localhost:9092")
     properties.setProperty("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
