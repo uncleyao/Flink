@@ -14,7 +14,6 @@ object ProcessFunctionTest {
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     env.setParallelism(1)
-    //设置EventTIme
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
 
     /**
@@ -26,7 +25,6 @@ object ProcessFunctionTest {
     env.getCheckpointConfig.setFailOnCheckpointingErrors(true)
 
     val stream = env.socketTextStream("localhost", 7777)
-    //在terminal开socket： nc -lk 7777
     val dataStream: DataStream[SensorReading] = stream.map(data => {
       val dataArray = data.split(",")
       SensorReading(dataArray(0).trim,dataArray(1).trim.toLong,dataArray(2).trim.toDouble)
@@ -35,6 +33,7 @@ object ProcessFunctionTest {
         override def extractTimestamp(t: SensorReading): Long = t.timestamp*1000
       })
 
+    /** Process function调用 */
     val processedStream = dataStream.keyBy(_.id)
         .process(new TempIncreAlert() )
 
@@ -66,29 +65,29 @@ object ProcessFunctionTest {
 }
 
 /**
- * 温度上升报警
+ * 温度上升报警【processfunction】，Key是String，输入是SensorReading，输出是String
  */
 class TempIncreAlert() extends KeyedProcessFunction[String, SensorReading, String]{
   /**
    * processElement是来一个数据处理一次，但此时要保存上一次温度。所以要定义一个状态来保存数据的温度
    */
+  /** 定义一个状态，保存上一个数据的温度 */
   lazy val lastTemp: ValueState[Double] = getRuntimeContext.getState( new ValueStateDescriptor[Double]("lastTemp", classOf[Double]))
   /** 定义一个状态，保存定时器的时间戳 */
   lazy val currentTimer: ValueState[Long] = getRuntimeContext.getState(new ValueStateDescriptor[Long]("currentTimer",classOf[Long]))
 
-
   override def processElement(value: SensorReading, context: KeyedProcessFunction[String, SensorReading, String]#Context, collector: Collector[String]): Unit = {
-    //先取出上一个温度值
+    //先取出上一个温度值，从状态中取
     val preTemp = lastTemp.value()
     //更新温度值
     lastTemp.update(value.temperature)
 
     val curTimerTs = currentTimer.value()
-
     //温度连续上升且没有设过定时器，则注册定时器
     if (value.temperature > preTemp && curTimerTs == 0) {
       //获取当前时间
       val timeTs = context.timerService().currentProcessingTime() + 10000L
+      /** 注册 */
       context.timerService().registerProcessingTimeTimer(timeTs)
       currentTimer.update(timeTs)
     }
@@ -98,10 +97,7 @@ class TempIncreAlert() extends KeyedProcessFunction[String, SensorReading, Strin
       currentTimer.clear()
     }
   }
-
-
-
-
+    /** 回调函数的覆写用来对timer做触发操作 */
     override def onTimer(timestamp: Long, ctx: KeyedProcessFunction[String, SensorReading, String]#OnTimerContext, out: Collector[String]): Unit = {
       // 输出报警信息
       out.collect( ctx.getCurrentKey + "温度连续上升" )

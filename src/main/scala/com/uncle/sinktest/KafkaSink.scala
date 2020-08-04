@@ -19,7 +19,7 @@ object KafkaSink {
     properties.setProperty("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     properties.setProperty("acks", "1")
 
-// 输出
+    /** 输入 */
     val inputStream = env.addSource( new FlinkKafkaConsumer011[String]("sensor-input", new SimpleStringSchema(), properties))
 
     val dataStream = inputStream.map(data => {
@@ -27,7 +27,7 @@ object KafkaSink {
       SensorReading(dataArray(0).trim,dataArray(1).trim.toLong,dataArray(2).trim.toDouble).toString //转换成String方便序列化输出
     })
 
-    // sink过程，放入kafka
+    /** sink过程，放入kafka */
     dataStream.addSink( new FlinkKafkaProducer011[String]("localhost:9092","sinkTest", new SimpleStringSchema() ) )
     dataStream.print()
 
