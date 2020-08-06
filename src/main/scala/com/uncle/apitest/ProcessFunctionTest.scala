@@ -38,10 +38,10 @@ object ProcessFunctionTest {
         .process(new TempIncreAlert() )
 
     /**
-     * 监测变化值【采用状态编程】
+     * 监测变化值：如果差值查过阈值报警
+     * 采用状态编程
      */
     val processedStream2 = dataStream.keyBy(_.id)
-     //   .process(new TempChangeAlert() )
         .flatMap(new TempChangeAlert(10.0))
 
     //第三种状态编程方式，可以了解，如果不喜欢可以用上面第二种
@@ -71,7 +71,7 @@ class TempIncreAlert() extends KeyedProcessFunction[String, SensorReading, Strin
   /**
    * processElement是来一个数据处理一次，但此时要保存上一次温度。所以要定义一个状态来保存数据的温度
    */
-  /** 定义一个状态，保存上一个数据的温度 */
+  /** 定义一个状态，保存上一个数据的温度 【这里是申明键控状态过程，里面传入状态描述器】 */
   lazy val lastTemp: ValueState[Double] = getRuntimeContext.getState( new ValueStateDescriptor[Double]("lastTemp", classOf[Double]))
   /** 定义一个状态，保存定时器的时间戳 */
   lazy val currentTimer: ValueState[Long] = getRuntimeContext.getState(new ValueStateDescriptor[Long]("currentTimer",classOf[Long]))
@@ -105,23 +105,25 @@ class TempIncreAlert() extends KeyedProcessFunction[String, SensorReading, Strin
     }
 }
 
+/** 状态编程第一例子 */
 class TempChangeAlert2(threshold: Double) extends KeyedProcessFunction[String, SensorReading, (String, Double, Double)]{
-  //定义一个状态变量，保存上次的温度值
+  /** 定义一个状态变量，保存上次的温度值 */
   lazy val lastTempState: ValueState[Double] = getRuntimeContext.getState(new ValueStateDescriptor[Double]("lastTemp", classOf[Double]))
-  override def processElement(value: SensorReading, context: KeyedProcessFunction[String, SensorReading, (String, Double, Double)]#Context, collector: Collector[(String, Double, Double)]): Unit = {
-    //获取上次温度
+  override def processElement(value: SensorReading, context: KeyedProcessFunction[String, SensorReading, (String, Double, Double)]#Context, out: Collector[(String, Double, Double)]): Unit = {
+    //获取上次温度【状态获取】
     val lastTemp = lastTempState.value()
     // 用当前的温度和上次求差，如果大于阈值输出报警
     val diff = (value.temperature - lastTemp).abs
     if (diff > threshold) {
-      collector.collect((value.id, lastTemp,value.temperature))
+      /** 输出 */
+      out.collect((value.id, lastTemp,value.temperature))
     }
-    /* 之后要更新状态 */
+    /** 之后要更新状态 */
     lastTempState.update(value.temperature)
   }
 }
 
-
+/** 状态编程第二例子，使用flatMap，需要用富函数获得有状态的信息 */
 class TempChangeAlert(threshold: Double) extends RichFlatMapFunction[SensorReading, (String, Double, Double)]{
 
   private var lastTempState: ValueState[Double] = _
