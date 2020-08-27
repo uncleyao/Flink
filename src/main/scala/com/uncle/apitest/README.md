@@ -6,7 +6,7 @@
 
 [Transform代码](./TransformTest.scala)
 ### Window及WaterMark
-针对EventTime处理乱序的核心
+针对EventTime处理乱序的核心【window()一定在keyBy之后，且之后一定要有聚合操作】
 * 设置EventTime【默认是Processing Time】
 * 指定WaterMark时间戳
 * 指定时间戳
