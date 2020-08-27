@@ -8,8 +8,14 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011
 import sun.java2d.pipe.SpanShapeRenderer.Simple
 
 
-/** 传感器读书样例类，有Id，时间，和温度 */
+/** 传感器读书样例类，有Id，时间，和温度
+ * 1、构造器中的参数如果不被声明为var的话，它默认的是val类型的，但一般不推荐将构造器中的参数声明为var。
+ * 2、自动创建伴生对象，同时在里面给我们实现子apply方法，使我们在使用的时候可以不直接使用new创建对象。
+ * 3、伴生对象中同样会帮我们实现unapply方法，从而可以将case class应用于模式匹配。
+ * 4、实现自己的toString、hashCode、copy、equals方法
+ * */
 case class SensorReading( id: String, timestamp: Long, temperature: Double )
+
 
 object SourceTest {
   def main(args: Array[String]): Unit = {

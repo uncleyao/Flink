@@ -90,6 +90,7 @@ object TransformTest {
  */
 class MyFilter() extends FilterFunction[SensorReading]{
   override def filter(value: SensorReading): Boolean = {
+    // 样例类自带一些method
     value.id.startsWith("sensor_1")
   }
 }

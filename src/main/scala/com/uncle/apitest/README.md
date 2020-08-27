@@ -7,11 +7,13 @@
 [Transform代码](./TransformTest.scala)
 ### Window及WaterMark
 针对EventTime处理乱序的核心
-* 设置EventTime
+* 设置EventTime【默认是Processing Time】
 * 指定WaterMark时间戳
 * 指定时间戳
-    * 非乱序
-    * 乱序：需要自定义windowassigner，用于周期生成WaterMark
+    * 非乱序：assignAscendingTimestamps
+    * 乱序：assignTimestampsAndWatermarks：
+        * 方法1【简单】，传入new BoundedOutOfOrdernessTimestampExtractor[[T]] (延迟时间) 并覆写extractTimestamp
+        * 方法2【自定义】，传入自定义windowassigner，用于周期生成WaterMark
     
 [Windowd代码](./WindowTest.scala)
 ### Process Function 

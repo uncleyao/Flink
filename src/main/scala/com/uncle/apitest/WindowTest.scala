@@ -33,9 +33,11 @@ object WindowTest {
        */
       /**
        * 处理乱序事件，延迟一秒钟；最简单方法
-       * 传入延迟时间【1s】；并覆写extractTimestamp 获取WaterMark：传入element的Timestamp
+       * 传入延迟时间maxOutOfOrderness【element的eventTime - 前一次WaterMark事件】【1s】；并覆写extractTimestamp
+       * 获取WaterMark：传入element的Timestamp
        */
       .assignTimestampsAndWatermarks(new BoundedOutOfOrdernessTimestampExtractor[SensorReading]( Time.seconds(1) ) {
+        // extractTimestamp ，如果该事件大于currentMaxTimestamp，则更新currentMaxTimestamp
         override def extractTimestamp(t: SensorReading): Long = t.timestamp*1000
       })
 

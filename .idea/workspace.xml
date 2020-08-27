@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af5dd568-e94a-4933-ad5a-8024c50d6771" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/scala/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/ProcessFunctionTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/ProcessFunctionTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/SourceTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/SourceTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/TransformTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/TransformTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/WindowTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/com/uncle/apitest/WindowTest.scala" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,9 +27,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="dummy://scala-decompiled/DataStream.decompiled.java" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -158,7 +159,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
